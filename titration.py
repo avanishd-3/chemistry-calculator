@@ -162,6 +162,7 @@ class Titration:
         return data_list
 
     def titration_info(self) -> dict:
+        """ Combine initial info, halfway pt info, equivalence pt info"""
         titration_info_dict = dict()
 
         initial = self._initial_ph()
@@ -177,6 +178,7 @@ class Titration:
         return titration_info_dict
 
     def plot_titration_curve(self) -> None:
+        """ Plot titration curve using Matplotlib"""
         initial_ph_val = self._initial_ph()['Initial pH']
 
         initial_pt = (0, initial_ph_val)
