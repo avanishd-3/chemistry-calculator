@@ -1,6 +1,12 @@
 # chemistry-calculator
 Command-line tool for various chemical calculations
 
+Installation Instructions:
+
+pip install -r requirements.text
+
+Commands:
+
 1. b or balance -> balance rxn
 2. l or limiting or limiting reagent -> find limiting reagent in rxn
 3. c or combustion or combustion analysis -> perform combustion analysis on combustion rxn
