@@ -1,4 +1,6 @@
-chemlib==2.2.4
-pubchempy==1.0.4
-rdkit-pypi==2022.9.5
-matplotlib==3.8.2
+chemlib~=2.2.4
+pubchempy~=1.0.4
+rdkit-pypi~=2022.9.5
+matplotlib~=3.8.2
+jupyter~=1.0.0
+sympy~=1.12

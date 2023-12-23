@@ -84,7 +84,7 @@ def main() -> None:
                                                                   amounts_list, 'molecules')
                         print(limiting_reagent.formula)
 
-            case 'c' | 'combustion analysis' | 'combustion':
+            case 'c' | 'combustion':
                 carbon_dioxide_amount = float(input("Enter grams of carbon dioxide produced: "))
                 water_amount = float(input("Enter grams of water produced: "))
 
@@ -127,7 +127,7 @@ def main() -> None:
                 print(vsepr.return_vsepr_info())
 
             case 'd' | 'draw':
-                visualization.draw_molecule()
+                visualization.draw_2d_molecule()
 
             case 'e' | 'electrolysis' | 'electrochem':  # Find cell, cathode, anode, cell potential
                 electrodes = input("Enter electrodes (separate by space): ")

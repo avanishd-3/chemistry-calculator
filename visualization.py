@@ -6,7 +6,7 @@ from rdkit.Chem import Draw
 import vsepr
 
 
-def draw_molecule() -> None:
+def draw_2d_molecule() -> None:
     """Draw 2D representation of molecule using RDKIT and PIL"""
     formula, smiles = vsepr.get_formula_and_smiles()
 
