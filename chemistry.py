@@ -1,6 +1,7 @@
 # Libraries
 import chemlib
 from pprint import pprint
+import pandas as pd
 
 # Files
 import vsepr
@@ -44,13 +45,13 @@ def main() -> None:
 
         match command.strip().lower():
             case 'b' | 'balance':
-                reactants_input = input("Enter reactants (separate by space): ")
-                products_input = input("Enter products (separate by space): ")
+                reactants_input = input("Enter reactants (separate by commas and spaces): ")
+                products_input = input("Enter products (separate by commas and spaces): ")
 
-                reactants_list = reactants_input.split(' ')  # List of reactants represented by str
+                reactants_list = reactants_input.split(', ')  # List of reactants represented by str
                 reactants_list = [chemlib.Compound(i) for i in reactants_list]
 
-                products_list = products_input.split(' ')  # List of reactants represented by str
+                products_list = products_input.split(', ')  # List of reactants represented by str
                 products_list = [chemlib.Compound(i) for i in products_list]
 
                 balanced_reaction = _balance_equation(reactants_list, products_list)
@@ -58,13 +59,13 @@ def main() -> None:
                 print(f"Balanced Reaction: {balanced_reaction.formula}")  # Balanced Reaction
 
             case 'l' | 'limiting reagent' | 'limiting':
-                reactants_input = input("Enter reactants (separate by space): ")
-                products_input = input("Enter products (separate by space): ")
+                reactants_input = input("Enter reactants (separate by commas and spaces): ")
+                products_input = input("Enter products (separate by commas and spaces): ")
 
-                reactants_list = reactants_input.split(' ')  # List of reactants represented by str
+                reactants_list = reactants_input.split(', ')  # List of reactants represented by str
                 reactants_list = [chemlib.Compound(i) for i in reactants_list]
 
-                products_list = products_input.split(' ')  # List of reactants represented by str
+                products_list = products_input.split(', ')  # List of reactants represented by str
                 products_list = [chemlib.Compound(i) for i in products_list]
 
                 balanced_reaction = _balance_equation(reactants_list, products_list)
@@ -91,7 +92,7 @@ def main() -> None:
 
                 print(chemlib.thermochemistry.combustion_analysis(carbon_dioxide_amount, water_amount))
 
-            case 'a' | 'acidity' | 'acid':  # Find pH, pOH, [H+]
+            case 'a' | 'acidity' | 'acid':  # Find pH, pOH, [H+], [OH-], acidity status
                 molarity_type = input("Enter type (m for molarity and p for pH: ")
 
                 match molarity_type.strip().lower():
@@ -101,28 +102,36 @@ def main() -> None:
 
                         match h_status.strip().lower():
                             case 'h':
-                                print(chemlib.pH(H=molarity))
+                                info_dict = chemlib.pH(H=molarity)
+
+                                print(pd.DataFrame([info_dict]))
+
                             case 'oh':
-                                print(chemlib.pH(OH=molarity))
+                                info_dict = chemlib.pH(OH=molarity)
+
+                                print(pd.DataFrame([info_dict]))
+
                     case 'p':
                         acidity_num = float(input("Enter pH: "))
 
-                        print(chemlib.pH(pH=acidity_num))
+                        info_dict = chemlib.pH(pH=acidity_num)
+
+                        print(pd.DataFrame([info_dict]))
 
             case 'w' | 'wave' | 'waves':  # Find wavelength, frequency, energy
                 value_type = input("Enter type of value (wavelength, frequency, or energy): ")
-                value = float(input("Enter value: "))
+                value = float(input("Enter value (use e- instead of 10^-): "))
 
                 match value_type.strip().lower():
                     case 'w' | 'wavelength':
                         wave = chemlib.Wave(wavelength=value)
-                        print(wave.properties)
+                        print(pd.DataFrame([wave.properties]))
                     case 'f' | 'frequency':
                         wave = chemlib.Wave(frequency=value)
-                        print(wave.properties)
+                        print(pd.DataFrame([wave.properties]))
                     case 'e' | 'energy':
                         wave = chemlib.Wave(energy=value)
-                        print(wave.properties)
+                        print(pd.DataFrame([wave.properties]))
 
             case 'v' | 'vespr' | 'vsepr':
                 print(vsepr.return_vsepr_info())
@@ -131,16 +140,16 @@ def main() -> None:
                 visualization.draw_2d_molecule()
 
             case 'e' | 'electrolysis' | 'electrochem':  # Find cell, cathode, anode, cell potential
-                electrodes = input("Enter electrodes (separate by space): ")
+                electrodes = input("Enter electrodes (separate by commas and spaces): ")
 
-                electrode_list = electrodes.split(' ')
+                electrode_list = electrodes.split(', ')
 
                 electrode_1 = electrode_list[0]
                 electrode_2 = electrode_list[-1]
 
                 galvanic_cell = chemlib.Galvanic_Cell(electrode_1, electrode_2)
 
-                print(galvanic_cell.properties)
+                print(pd.DataFrame([galvanic_cell.properties]).set_index('Cell'))
 
             case 't' | 'titration':
                 starting = input("Acid or base: ")
@@ -160,7 +169,7 @@ def main() -> None:
                     t.plot_titration_curve()
 
             case 'p' | 'property' | 'properties':
-                elements_input = str(input('Enter elements separated by comma and space: '))
+                elements_input = str(input('Enter elements separated by commas and spaces: '))
 
                 elements_list = elements_input.split(', ')
 

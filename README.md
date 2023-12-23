@@ -10,7 +10,7 @@ Commands:
 1. b or balance -> balance rxn
 2. l or limiting or limiting reagent -> find limiting reagent in rxn
 3. c or combustion -> perform combustion analysis on combustion rxn
-4. a or acid or acidity -> find pH, pOH, [H+]
+4. a or acid or acidity -> find pH, pOH, [H+], [OH-], acidity status
 5. w or wave or waves -> find wavelength, frequency, energy of wave
 6. v or vespr or vsepr -> calculate vsepr information based on name of molecule
 7. d or draw -> Draw molecule using RDkit
