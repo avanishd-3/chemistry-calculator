@@ -3,3 +3,4 @@ pubchempy~=1.0.4
 rdkit-pypi~=2022.9.5
 matplotlib~=3.8.2
 sympy~=1.12
+pandas~=2.1.4

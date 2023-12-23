@@ -6,6 +6,7 @@ from pprint import pprint
 import vsepr
 import visualization
 import titration
+import properties
 
 
 def _balance_equation(reactants_list: list, products_list: list) -> chemlib.Reaction:
@@ -157,6 +158,15 @@ def main() -> None:
 
                 if diagram_input.strip().lower() == 'y':
                     t.plot_titration_curve()
+
+            case 'p' | 'property' | 'properties':
+                elements_input = str(input('Enter elements separated by comma and space: '))
+
+                elements_list = elements_input.split(', ')
+
+                prop_df = properties.return_prop_df(elements_list)
+
+                print(prop_df.set_index('Symbol'))
 
             case 'q' | 'quit':
                 break

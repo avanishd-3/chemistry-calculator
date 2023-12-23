@@ -16,4 +16,5 @@ Commands:
 7. d or draw -> Draw molecule using RDkit
 8. e or electrolysis or electrochem -> Find cell, cathode, anode, cell potential
 9. t or titration -> Perform titration given acid volume, molarity, k value and base molarity
+10. p or property or properties -> Return atomic radius, electronegativity, first ionization of elements given
 10. q or quit -> Quit application
