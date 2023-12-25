@@ -5,9 +5,9 @@ import pandas as pd
 
 # Files
 import vsepr
-import visualization
+import draw_molecule
 import titration
-import properties
+import element_properties
 
 
 def _balance_equation(reactants_list: list, products_list: list) -> chemlib.Reaction:
@@ -36,6 +36,11 @@ def _find_limiting_reagent(reaction: chemlib.Reaction, amounts_list: list, unit:
             return reaction.limiting_reagent(float(amounts_list[0]), float(amounts_list[1]),
                                              float(amounts_list[2]), float(amounts_list[3]),
                                              float(amounts_list[-1]), mode=unit)
+
+
+def _convert_dict_to_dataframe(info_dict: dict) -> pd.DataFrame:
+    """ Convert dictionary to pandas dataframe """
+    return pd.DataFrame([info_dict])
 
 
 def main() -> None:
@@ -93,7 +98,7 @@ def main() -> None:
                 print(chemlib.thermochemistry.combustion_analysis(carbon_dioxide_amount, water_amount))
 
             case 'a' | 'acidity' | 'acid':  # Find pH, pOH, [H+], [OH-], acidity status
-                molarity_type = input("Enter type (m for molarity and p for pH: ")
+                molarity_type = input("Enter type (m for molarity and p for pH): ")
 
                 match molarity_type.strip().lower():
                     case 'm':
@@ -104,19 +109,19 @@ def main() -> None:
                             case 'h':
                                 info_dict = chemlib.pH(H=molarity)
 
-                                print(pd.DataFrame([info_dict]))
+                                print(_convert_dict_to_dataframe(info_dict))
 
                             case 'oh':
                                 info_dict = chemlib.pH(OH=molarity)
 
-                                print(pd.DataFrame([info_dict]))
+                                print(_convert_dict_to_dataframe(info_dict))
 
                     case 'p':
                         acidity_num = float(input("Enter pH: "))
 
                         info_dict = chemlib.pH(pH=acidity_num)
 
-                        print(pd.DataFrame([info_dict]))
+                        print(_convert_dict_to_dataframe(info_dict))
 
             case 'w' | 'wave' | 'waves':  # Find wavelength, frequency, energy
                 value_type = input("Enter type of value (wavelength, frequency, or energy): ")
@@ -137,7 +142,7 @@ def main() -> None:
                 print(vsepr.return_vsepr_info())
 
             case 'd' | 'draw':
-                visualization.draw_2d_molecule()
+                draw_molecule.draw_2d_molecule()
 
             case 'e' | 'electrolysis' | 'electrochem':  # Find cell, cathode, anode, cell potential
                 electrodes = input("Enter electrodes (separate by commas and spaces): ")
@@ -149,7 +154,7 @@ def main() -> None:
 
                 galvanic_cell = chemlib.Galvanic_Cell(electrode_1, electrode_2)
 
-                print(pd.DataFrame([galvanic_cell.properties]).set_index('Cell'))
+                print(_convert_dict_to_dataframe(galvanic_cell.properties).set_index('Cell'))
 
             case 't' | 'titration':
                 starting = input("Acid or base: ")
@@ -173,9 +178,14 @@ def main() -> None:
 
                 elements_list = elements_input.split(', ')
 
-                prop_df = properties.return_prop_df(elements_list)
+                prop_df = element_properties.return_prop_df(elements_list)
 
                 print(prop_df.set_index('Symbol'))
+
+                diagram_input = input("Diagram (Y or N): ")
+
+                if diagram_input.strip().lower() == 'y':
+                    element_properties.draw_comparison(prop_df)
 
             case 'q' | 'quit':
                 break
