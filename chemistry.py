@@ -75,9 +75,10 @@ def main() -> None:
 
                 balanced_reaction = _balance_equation(reactants_list, products_list)
 
-                unit = input("Enter unit (grams, moles, molecules): ")
                 amounts = input("Enter amounts of reactants (separated by space): ")
                 amounts_list = amounts.split(' ')
+
+                unit = input("Enter unit (grams, moles, molecules): ")
 
                 match unit.strip().lower():
                     case 'g' | 'gram' | 'grams':
@@ -186,6 +187,37 @@ def main() -> None:
 
                 if diagram_input.strip().lower() == 'y':
                     element_properties.draw_comparison(prop_df)
+
+            case 's' | 'stoich' | 'stoichiometry':
+                while True:
+                    try:
+                        compound_input = str(input('Enter compound: ')).strip()
+                        compound = chemlib.Compound(compound_input)
+                    except IndexError:
+                        print("Invalid compound. Try again.")
+                        continue
+                    else:
+                        break
+
+                amount = float(input("Enter amount of compound: "))
+
+                unit = input("Enter unit (grams, moles, molecules): ")
+
+                def _add_compound_name_to_output(stoich_dict: dict) -> dict:
+                    stoich_dict['compound'] = compound_input
+                    stoich_dict['molar mass'] = f'{compound.molar_mass()} g/mol'
+                    return stoich_dict
+
+                match unit.strip().lower():
+                    case 'g' | 'gram' | 'grams':
+                        stoich_dict = _add_compound_name_to_output(compound.get_amounts(grams=amount))
+                        print(_convert_dict_to_dataframe(stoich_dict).set_index('compound'))
+                    case 'moles':
+                        stoich_dict = _add_compound_name_to_output(compound.get_amounts(moles=amount))
+                        print(_convert_dict_to_dataframe(stoich_dict).set_index('compound'))
+                    case 'molecules':
+                        stoich_dict = _add_compound_name_to_output(compound.get_amounts(molecules=amount))
+                        print(_convert_dict_to_dataframe(stoich_dict).set_index('compound'))
 
             case 'q' | 'quit':
                 break
