@@ -1,5 +1,4 @@
 import chemlib
-import rdkit
 from rdkit import Chem
 import pubchempy as pcp
 
@@ -24,20 +23,9 @@ def get_formula_and_smiles() -> list:
 
 def _get_bond_numbers(smiles: str) -> list:
     """ Return list of bond numbers based on compound SMILES representation"""
-
     moles = Chem.MolFromSmiles(smiles)
 
-    bond_list = [bond.GetBondType() for bond in moles.GetBonds()]
-
-    # Changing bond type to int
-    int_for_single_bonds = [1 if item == rdkit.Chem.rdchem.BondType.SINGLE else item for item in bond_list]
-    int_for_double_bonds = [2 if item == rdkit.Chem.rdchem.BondType.DOUBLE else item for item
-                            in int_for_single_bonds]
-    int_for_triple_bonds = [3 if item == rdkit.Chem.rdchem.BondType.TRIPLE else item for item
-                            in int_for_double_bonds]
-    bond_list = [1.5 if item == rdkit.Chem.rdchem.BondType.AROMATIC else item for item in int_for_triple_bonds]
-
-    return bond_list
+    return [bond.GetBondTypeAsDouble() for bond in moles.GetBonds()]
 
 
 def _create_vsepr_dict(keys: list, values: list) -> dict:
