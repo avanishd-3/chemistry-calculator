@@ -18,4 +18,5 @@ Commands:
 9. t or titration -> Perform titration given acid volume, molarity, k value and base molarity
 10. p or property or properties -> Return atomic radius, electronegativity, first ionization of elements given
 11. s or stoich or stoichiometry -> Return grams, moles, molecules, molar mass for an amount of a compound
-10. q or quit -> Quit application
+12. q or quit -> Quit application
+13. h or help -> Print all other commands
