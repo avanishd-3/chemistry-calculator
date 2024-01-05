@@ -229,7 +229,6 @@ def main() -> None:
                     for line in removed_space_lines:
                         print(f'\t\t\t\t{line}')
 
-                f.close()
 
             case 'q' | 'quit':
                 break
