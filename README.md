@@ -3,7 +3,7 @@ Command-line tool for various chemical calculations
 
 Installation Instructions:
 
-1. git clone avanishd-3/chemistry-calculator
+1. git clone https://github.com/avanishd-3/chemistry-calculator
 2. pip install -r requirements.text
 
 Commands:
